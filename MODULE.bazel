@@ -18,7 +18,7 @@ module(
 
 ## Toolchains (dependencies and config)
 # python
-bazel_dep(name = "rules_python", version = "1.4.1")
+bazel_dep(name = "rules_python", version = "1.8.3")
 
 PYTHON_VERSION = "3.12"
 
@@ -43,17 +43,17 @@ bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5", dev_dependency = True)
 
 # bazel cc rules
-bazel_dep(name = "rules_cc", version = "0.1.2")
+bazel_dep(name = "rules_cc", version = "0.2.17")
 
 # Toolchains and extensions
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.2.2", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.1", dev_dependency = True)
 bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = True)
 
 ## Bazel registry
 # Module dependencies
-bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
-bazel_dep(name = "google_benchmark", version = "1.9.4", dev_dependency = True)
+bazel_dep(name = "google_benchmark", version = "1.9.5", dev_dependency = True)
 
 bazel_dep(name = "platforms", version = "1.0.0")
 
@@ -79,8 +79,15 @@ git_override(
 )
 
 # ToDo: implicit dependencies for score_tooling, but needed directly here??
-bazel_dep(name = "aspect_rules_lint", version = "2.0.0")
-bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2")
+bazel_dep(name = "aspect_rules_lint", version = "2.3.0")
+bazel_dep(name = "buildifier_prebuilt", version = "8.5.1")
+archive_override(
+    module_name = "buildifier_prebuilt",
+    urls = ["https://github.com/keith/buildifier-prebuilt/archive/refs/tags/8.5.1.tar.gz"],
+    strip_prefix = "buildifier-prebuilt-8.5.1",
+    patches = ["//:buildifier_aarch64.patch"],
+    patch_strip = 1,
+)
 
 ## temporary overrides / tools
 # Testing utils dependency.
@@ -140,13 +147,33 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+## AutoSD10 Toolchain
+gcc.toolchain(
+    name = "score_autosd10_x86_64_toolchain",
+    runtime_ecosystem = "autosd10",
+    target_cpu = "x86_64",
+    target_os = "linux",
+    use_default_package = True,
+)
+gcc.toolchain(
+    name = "score_autosd10_aarch64_toolchain",
+    runtime_ecosystem = "autosd10",
+    target_cpu = "aarch64",
+    target_os = "linux",
+    use_default_package = True,
+)
+
 use_repo(
     gcc,
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain_pkg",
+    "score_autosd10_aarch64_toolchain",
+    "score_autosd10_x86_64_toolchain",
 )
 
 # S-CORE crates
-bazel_dep(name = "score_crates", version = "0.0.7")
+bazel_dep(name = "score_crates", version = "0.0.9")

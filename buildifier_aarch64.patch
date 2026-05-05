@@ -1,0 +1,11 @@
+--- a/toolchain.bzl
++++ b/toolchain.bzl
+@@ -48,6 +48,8 @@ def declare_toolchain(tool_name, tool, os, arch):  # buildifier: disable=unname
+         os = "macos"
+     if arch == "amd64":
+         arch = "x86_64"
++    if arch == "arm64":
++        arch = "aarch64"
+
+     native.toolchain(
+         name = name + "_toolchain",

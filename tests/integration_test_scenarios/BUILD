@@ -100,6 +100,7 @@ qnx_ifs(
         ":is_qnx_aarch64": ["install"],  # relative to the .build file’s dir
         "//conditions:default": [],
     }),
+    target_compatible_with = ["@platforms//os:qnx"],
 )
 
 sh_binary(
@@ -118,4 +119,5 @@ sh_binary(
         "@toolchains_qnx_sdp//:host_all",
         "@toolchains_qnx_sdp//:host_dir",
     ],
+    target_compatible_with = ["@platforms//os:qnx"],
 )
