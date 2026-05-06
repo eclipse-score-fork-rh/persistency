@@ -60,6 +60,11 @@ bazel_dep(name = "platforms", version = "1.0.0")
 ## S-CORE bazel registry
 bazel_dep(name = "score_baselibs", version = "0.2.7")
 bazel_dep(name = "score_baselibs_rust", version = "0.1.2")
+git_override(
+    module_name = "score_baselibs_rust",
+    commit = "363452b3f131347e8659dc5a3b0e0b762fd80e97",  # fix unstable NonNull::from_ref
+    remote = "https://github.com/eclipse-score-fork-rh/baselibs_rust.git",
+)
 bazel_dep(name = "score_bazel_platforms", version = "0.1.2")
 bazel_dep(name = "score_docs_as_code", version = "4.0.3")
 
@@ -68,7 +73,12 @@ bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
 
 bazel_dep(name = "score_python_basics", version = "0.3.4")
 bazel_dep(name = "score_tooling", version = "1.2.0")
-bazel_dep(name = "score_logging", version = "0.2.0")
+bazel_dep(name = "score_logging", version = "0.2.1")
+git_override(
+    module_name = "score_logging",
+    commit = "02f76cc894af88eb638f5d04239919bea46a0375",  # includes aarch64-linux support
+    remote = "https://github.com/eclipse-score-fork-rh/logging.git",
+)
 
 # TODO: remove once inherited properly from `score_logging`.
 bazel_dep(name = "trlc", version = "0.0.0", dev_dependency = True)
