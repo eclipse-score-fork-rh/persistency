@@ -94,3 +94,4 @@ coverage --cache_test_results=no
 # Import local user workspace file, if exists
 # -------------------------------------------------------------------------------
 try-import %workspace%/user.bazelrc
+try-import %workspace%/autosd.bazelrc
